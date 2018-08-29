@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 from PIL import Image
+import os
 
 
 def deep_dream():
@@ -38,6 +39,16 @@ def style_transfer():
     # plt.show()
 
 
+def dcgan():
+    import imageio
+    images = []
+    files = [file for file in os.listdir('../results') if file.startswith('dcgan') and file.endswith('.png')]
+    for file in files:
+        images.append(imageio.imread(os.path.join('../results', file)))
+    imageio.mimsave('../results/dcgan.gif', images, fps=5)
+
+
 if __name__ == '__main__':
-    deep_dream()
+    # deep_dream()
     # style_transfer()
+    dcgan()
