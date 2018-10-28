@@ -19,6 +19,7 @@ def show_conv():
     plt.ion()
     texts = []
     feature_map = np.zeros((26, 26))
+    flip_filter = np.flipud(np.fliplr(filter))  # flip both sides of the filter
     for i in range(26):
         for j in range(26):
 
@@ -31,7 +32,7 @@ def show_conv():
                     else:
                         texts[n*3+m].set_position((j+m, i+n))
 
-            feature_map[i, j] = np.sum(filter * image[i:i+3, j:j+3])
+            feature_map[i, j] = np.sum(flip_filter * image[i:i+3, j:j+3])
             fm = ax2.imshow(feature_map, cmap='gray', vmax=255*3, vmin=-255*3)
             plt.xticks(())
             plt.yticks(())
@@ -70,10 +71,11 @@ def show_result():
     plt.figure(1)
     for n in range(4):
         feature_map = np.zeros((26, 26))
+        flip_filter = np.flipud(np.fliplr(filters[n]))
 
         for i in range(26):
             for j in range(26):
-                feature_map[i, j] = np.sum(image[i:i + 3, j:j + 3] * filters[n])
+                feature_map[i, j] = np.sum(image[i:i + 3, j:j + 3] * flip_filter)
 
         plt.subplot(3, 4, 1 + n)
         plt.title('Filter%i' % n)
