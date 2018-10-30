@@ -42,7 +42,7 @@ with tf.variable_scope('LeNet'):
         pool_size=2,
         strides=2,
         name="maxpool1")                                        # -> [batch, 14, 14, 6]
-    net = tf.layers.conv2d(net, 16, 5, 1, name="conv2")         # -> [batch, 14, 14, 16]
+    net = tf.layers.conv2d(net, 16, 5, 1, padding="same", name="conv2")  # -> [batch, 14, 14, 16]
     net = tf.layers.max_pooling2d(net, 2, 2, name="maxpool2")   # -> [batch, 7, 7, 16]
     net = tf.layers.flatten(net, name='flat')                   # -> [batch, 7*7*16=784]
     logits = tf.layers.dense(net, 10, name='fc4')               # -> [batch, n_classes]
