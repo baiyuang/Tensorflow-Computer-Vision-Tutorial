@@ -1,14 +1,3 @@
-"""
-A simple implementation of LeNet that works on MNIST dataset.
-[LeNet](http://www.dengfanxin.cn/wp-content/uploads/2016/03/1998Lecun.pdf)
-
-Learn more, visit my tutorial site: [莫烦Python](https://morvanzhou.github.io)
-
-Dependencies:
-tensorflow=1.8.0
-numpy=1.14.3
-"""
-
 import numpy as np
 import tensorflow as tf
 
@@ -49,16 +38,15 @@ with tf.variable_scope('LeNet'):
 
 loss = tf.losses.sparse_softmax_cross_entropy(labels=tf_y, logits=logits)  # compute cost
 train_op = tf.train.AdamOptimizer(LR).minimize(loss)
-
-accuracy = tf.metrics.accuracy(          # return (acc, update_op), and create 2 local variables
-    labels=tf_y, predictions=tf.argmax(logits, axis=1),)[1]
+accuracy = tf.metrics.accuracy(labels=tf_y, predictions=tf.argmax(logits, axis=1),)[1]
 
 sess = tf.Session()
-sess.run(tf.group(      # initialize var in graph
-    tf.global_variables_initializer(),
-    tf.local_variables_initializer(),
-    iterator.initializer)
-)                       # the local var is for accuracy_op
+sess.run(
+    tf.group(
+        tf.global_variables_initializer(),
+        tf.local_variables_initializer(),
+        iterator.initializer)
+)
 
 writer = tf.summary.FileWriter('./log', sess.graph)     # write to file
 
